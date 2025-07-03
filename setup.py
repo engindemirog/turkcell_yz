@@ -5,7 +5,7 @@ setup(
     version="1.0.0",
     description="E-ticaret sipariş iptal tahmini için FastAPI servisi",
     author="Engin Demiroğ",
-    packages=find_packages(include=["app", "app.*"]),
+    packages=find_packages(include=["", ".*"]),
     include_package_data=True,
     install_requires=[
         "fastapi",
@@ -17,7 +17,8 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "run-ecommerce-api=app.main:app"
+            "train_model = train",  
+            "run-ecommerce-api=main:app"
         ]
     },
     classifiers=[
