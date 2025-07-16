@@ -60,4 +60,3 @@ print(X.toarray())
 
 
 #Stem/Lemma türkçe yapmaya çalışınız...
-
