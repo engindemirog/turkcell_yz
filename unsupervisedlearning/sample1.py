@@ -21,7 +21,7 @@ df = pd.DataFrame({
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(df)
 
-kmeans = KMeans(n_clusters=10, random_state=42)
+kmeans = KMeans(n_clusters=3, random_state=42)
 
 df["cluster"] = kmeans.fit_predict(X_scaled)
 
