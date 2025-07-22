@@ -68,4 +68,10 @@ data["cluster"] = clusters
 cluster_summary = data.groupby("cluster").mean().round(2)
 print(cluster_summary)
 
-
+sns.scatterplot(
+    x='annual_spend', y='recency',
+    hue='cluster', data=data.sample(1000),
+    palette='Set2'
+)
+plt.title("Müşteri Segmentasyonu")
+plt.show()
