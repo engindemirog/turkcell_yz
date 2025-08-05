@@ -50,3 +50,5 @@ summary = ' '.join(summary_sentences)
 
 print("Özet")
 print(summary)
+
+#Türkçede yapınız. ar-ge
