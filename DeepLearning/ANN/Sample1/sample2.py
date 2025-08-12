@@ -76,4 +76,8 @@ print(confusion_matrix(y_test,y_pred))
 
 
 print("Classification Report")
-print(classification_report(y_test,y_pred)) 
+print(classification_report(y_test,y_pred))
+
+
+#Kaggleda fraud dataset bulunuz
+#Baseline,Smote,Classweight uygulayıp yorumlatınız.
