@@ -39,6 +39,22 @@ X_scaled = scaler.fit_transform(X)
 
 X_train,X_test,y_train,y_test = train_test_split(X_scaled,y,test_size=0.2,random_state=42)
 
+#Class Weight
+
+from sklearn.utils.class_weight import compute_class_weight
+import numpy as np
+classes = np.unique(y_train) #[0,1]
+
+class_weights_array = compute_class_weight(
+    class_weight="balanced",
+    classes= classes,
+    y = y_train
+)
+
+class_weights = {int(k): v for k, v in zip(classes, class_weights_array)}
+
+print("Class Weights", class_weights)
+
 #yapay sinir ağı modelini kur
 
 model = Sequential() #Sıralı, katman katman öğrenme gerçekleştir
@@ -51,7 +67,7 @@ model.add(Dense(1,activation="sigmoid")) # çıkış(karar katmanı)
 
 model.compile(loss="binary_crossentropy",optimizer ="adam", metrics=["accuracy"])
 
-history = model.fit(X_train,y_train,validation_split=0.2,epochs = 50, batch_size=32,verbose=1)
+history = model.fit(X_train,y_train,validation_split=0.2,epochs = 50, batch_size=32,verbose=1, class_weight=class_weights)
 
 y_pred = (model.predict(X_test)>0.5).astype(int)
 
@@ -61,34 +77,3 @@ print(confusion_matrix(y_test,y_pred))
 
 print("Classification Report")
 print(classification_report(y_test,y_pred)) 
-
-#0 = false, 1 = true
-
-#TN(904) -> Doğru "Churn = 0 " tahmini (kalacak müşteri, model de kalacak demiş)
-#FP(129) -> Yanlış "Churn = 1" tahmini (aslında kalacak, ama ayrılacak sanmış) #COST
-#FN(181) -> Yanlış "Churn = 0" tahmini (aslında ayrılacak, ama kalacak sanmışız) #COST
-#TP(193) -> Doğru "Churn =1" tahmini (ayrılacak müşteri, model de ayrılacak demiş)
-
-#[TN,FP]
-#[FN,TP]
-# 
-# [T0,F1]
-# [F0,T1]
-
-#Domaininize göre strateji ne olurdu?
-
-#100  No Churn = 90 Churn = 10 
-
-#100 test -> 100 No Churn
-
-#7500 6750->0  750->1 
-#->sentetik veri üretebiliriz (SMOTE)
-#->class weight
-
-#Class Weight, SMOTE
-
-#SMOTE
-#0=9000 , 1=1000->9000
-
-#Class Weight
-#0=9000->1000, 1=1000
